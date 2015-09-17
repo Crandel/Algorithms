@@ -3,7 +3,7 @@
 
 def part(part_list, begin, end):
     pivot = begin
-    for i in xrange(begin+1, end+1):
+    for i in range(begin+1, end+1):
         if part_list[i] <= part_list[begin]:
             pivot += 1
             part_list[i], part_list[pivot] = part_list[pivot], part_list[i]
@@ -18,7 +18,7 @@ def quick_sort_low_memory(lst, bgn, end=None):
     if bgn >= end:
         return
     pivot = part(lst, bgn, end)
-    quick_sort_low_memory(lst, begin, pivot-1)
+    quick_sort_low_memory(lst, bgn, pivot-1)
     quick_sort_low_memory(lst, pivot+1, end)
     return lst
 
