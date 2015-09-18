@@ -1,5 +1,6 @@
 #! /usr/bin/env python
 '''
+I want to learn some algorithms, so I compare them sorting list
 Module for testing different algorithms
 '''
 from copy import copy
@@ -64,7 +65,7 @@ def quick_sort_high_memory(lst):
 
 def main():
     '''
-    I want to learn some algorithms, so I compare them sorting list
+    Start point of script
     '''
     unordered_list = [9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41]
     stime = time()
