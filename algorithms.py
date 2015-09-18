@@ -1,11 +1,14 @@
 #! /usr/bin/env python
 
+from copy import copy
 
+
+# Quick Sort Part
 # Help function for quick sort
 def part(part_list, begin, end):
     # We will pass through list starting from begin+1
     pivot = begin
-    # Start range from begin+1, because we need to compare all members 
+    # Start range from begin+1, because we need to compare all members
     for i in range(begin+1, end+1):
 
         if part_list[i] <= part_list[begin]:
@@ -18,6 +21,7 @@ def part(part_list, begin, end):
     return pivot
 
 
+# Use minimal memory, only move elements
 def quick_sort_low_memory(lst, bgn, end=None):
     if end is None:
         end = len(lst) - 1
@@ -32,10 +36,29 @@ def quick_sort_low_memory(lst, bgn, end=None):
     return lst
 
 
+# Use more memory, create new lists
+def quick_sort_high_memory(lst):
+
+    if not lst:
+        return []
+    # Found all elements equal to first element
+    pivots = [x for x in lst if x == lst[0]]
+    # Sort recursively all less members
+    less = quick_sort_high_memory([x for x in lst if x < lst[0]])
+    # Sort recursively all greater elements
+    great = quick_sort_high_memory([x for x in lst if x > lst[0]])
+
+    # Join lists
+    return less + pivots + great
+
+
 def main():
     unordered_list = [9, 3, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41]
-    qsort = quick_sort_low_memory(lst=unordered_list, bgn=0)
-    print(unordered_list)
+    qsort_low = quick_sort_low_memory(lst=copy(unordered_list), bgn=0)
+    qsort_more = quick_sort_high_memory(lst=copy(unordered_list))
+    print(qsort_low, 'quick_sort_low_memory')
+    print(qsort_more, 'quick_sort_high_memory')
+    print(unordered_list, 'unordered_list')
 
 if __name__ == "__main__":
     main()
