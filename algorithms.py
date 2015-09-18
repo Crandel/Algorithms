@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 from copy import copy
-
+from time import time
 
 # Quick Sort Part
 # Help function for quick sort
@@ -53,11 +53,15 @@ def quick_sort_high_memory(lst):
 
 
 def main():
+
     unordered_list = [9, 3, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41]
+    stime = time()
     qsort_low = quick_sort_low_memory(lst=copy(unordered_list), bgn=0)
+    qsort_low_time = time()
     qsort_more = quick_sort_high_memory(lst=copy(unordered_list))
-    print(qsort_low, 'quick_sort_low_memory')
-    print(qsort_more, 'quick_sort_high_memory')
+    qsort_more_time = time()
+    print(qsort_low, 'quick_sort_low_memory {} seconds'.format(round(qsort_low_time - stime, 6)))
+    print(qsort_more, 'quick_sort_high_memory {} seconds'.format(round(qsort_more_time - qsort_low_time, 6)))
     print(unordered_list, 'unordered_list')
 
 if __name__ == "__main__":
