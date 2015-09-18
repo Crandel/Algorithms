@@ -1,11 +1,17 @@
 #! /usr/bin/env python
-
+'''
+Module for testing different algorithms
+'''
 from copy import copy
 from time import time
 
+
 # Quick Sort Part
-# Help function for quick sort
 def part(part_list, begin, end):
+
+    '''
+    Help function for quick sort
+    '''
     # We will pass through list starting from begin+1
     pivot = begin
     # Start range from begin+1, because we need to compare all members
@@ -21,8 +27,10 @@ def part(part_list, begin, end):
     return pivot
 
 
-# Use minimal memory, only move elements
 def quick_sort_low_memory(lst, bgn, end=None):
+    '''
+    Use minimal memory, only move elements
+    '''
     if end is None:
         end = len(lst) - 1
     if bgn >= end:
@@ -36,9 +44,11 @@ def quick_sort_low_memory(lst, bgn, end=None):
     return lst
 
 
-# Use more memory, create new lists
 def quick_sort_high_memory(lst):
 
+    '''
+    Use more memory, create new lists
+    '''
     if not lst:
         return []
     # Found all elements equal to first element
@@ -53,8 +63,10 @@ def quick_sort_high_memory(lst):
 
 
 def main():
-
-    unordered_list = [9, 3, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41]
+    '''
+    I want to learn some algorithms, so I compare them sorting list
+    '''
+    unordered_list = [9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41]
     stime = time()
     qsort_low = quick_sort_low_memory(lst=copy(unordered_list), bgn=0)
     qsort_low_time = time()
@@ -63,6 +75,7 @@ def main():
     print(qsort_low, 'quick_sort_low_memory {} seconds'.format(round(qsort_low_time - stime, 6)))
     print(qsort_more, 'quick_sort_high_memory {} seconds'.format(round(qsort_more_time - qsort_low_time, 6)))
     print(unordered_list, 'unordered_list')
+
 
 if __name__ == "__main__":
     main()
