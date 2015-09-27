@@ -4,35 +4,40 @@ import (
 	"fmt"
 )
 
-func part(lst []int, bgn int, end int) int {
-	pivot := bgn
-	fmt.Println(bgn, end)
-	for i := bgn + 1; i < end; i++ {
-		if lst[i] >= lst[bgn] {
-			pivot++
-			lst[pivot], lst[i] = lst[i], lst[pivot]
+func qsort(lst []int) []int {
+	// this check for recursion
+	if len(lst) < 2 {
+		return lst
+	}
+	// first and last index of slice
+	l, r := 0, len(lst)-1
+	// control element is a middle of slice
+	pivot := len(lst) / 2
+	// move control element to right
+	lst[pivot], lst[r] = lst[r], lst[pivot]
+
+	for i, v := range lst {
+		if v < lst[r] {
+			lst[i], lst[l] = lst[l], lst[i]
+			l++
 		}
 	}
-	lst[pivot], lst[bgn] = lst[bgn], lst[pivot]
-	return pivot
-}
 
-func qsort_low(lst []int, bgn int, end int) []int {
-	if end == 0 {
-		end = len(lst)
-	}
-	if bgn >= end {
-		var empty_slice []int
-		return empty_slice
-	}
-	pivot := part(lst, bgn, end)
-	fmt.Println(lst, bgn, end, len(lst), cap(lst), pivot)
+	lst[l], lst[r] = lst[r], lst[l]
+	// list was separated in 2 parts
+	// in left part we have elements less than lst[l]
+	// in right - more than it
+
+	// sort left part recursively
+	qsort(lst[:l])
+	// sort right part recursively
+	qsort(lst[l+1:])
 	return lst
 }
 
 func main() {
-	fmt.Println("Hello world")
 	lst := []int{9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41}
-	new_array := qsort_low(lst, 1, 0)
-	fmt.Println(new_array)
+	fmt.Println(lst)
+	new_sorted_array := qsort(lst)
+	fmt.Println(new_sorted_array)
 }
