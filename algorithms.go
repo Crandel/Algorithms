@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func qsort(lst []int) []int {
+func qsort(lst []int8) []int8 {
 	// this check for recursion
 	if len(lst) < 2 {
 		return lst
@@ -36,7 +36,7 @@ func qsort(lst []int) []int {
 }
 
 func main() {
-	lst := []int{9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41}
+	lst := []int8{9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41}
 	fmt.Println(lst)
 	new_sorted_array := qsort(lst)
 	fmt.Println(new_sorted_array)
