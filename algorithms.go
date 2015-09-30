@@ -4,6 +4,12 @@ import (
 	"fmt"
 )
 
+func bubble_sort(lst []int8) []int8 {
+	pivot := lst[0]
+	fmt.Println(pivot)
+	return lst
+}
+
 func qsort(lst []int8) []int8 {
 	// this check for recursion
 	if len(lst) < 2 {
