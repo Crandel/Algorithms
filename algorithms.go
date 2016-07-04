@@ -4,9 +4,14 @@ import (
 	"fmt"
 )
 
-func bubble_sort(lst []int8) []int8 {
-	pivot := lst[0]
-	fmt.Println(pivot)
+func bubbleSort(lst []int8) []int8 {
+	for key := range lst {
+		for l := range lst {
+			if lst[l] > lst[key] {
+				lst[l], lst[key] = lst[key], lst[l]
+			}
+		}
+	}
 	return lst
 }
 
@@ -44,6 +49,8 @@ func qsort(lst []int8) []int8 {
 func main() {
 	lst := []int8{9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 45, 74, 63, 79, 4, 1, 7, 41}
 	fmt.Println(lst)
-	new_sorted_array := qsort(lst)
-	fmt.Println(new_sorted_array)
+	qArray := qsort(lst)
+	fmt.Println(qArray)
+	bArray := bubbleSort(lst)
+	fmt.Println(bArray)
 }
