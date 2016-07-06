@@ -82,6 +82,24 @@ def bubble_sort(lst):
     return lst
 
 
+def insertion_sort(lst):
+    sort_end_index = 1
+
+    def insert_index(lst, value):
+        for i in range(len(lst)):
+            if lst[i] >= value:
+                return i
+
+    while sort_end_index < len(lst):
+        value = lst[sort_end_index]
+        if value < lst[sort_end_index - 1]:
+            index = insert_index(lst, value)
+            del lst[sort_end_index]
+            lst.insert(index, value)
+        sort_end_index += 1
+    return lst
+
+
 def main():
     '''
     Start point of script
@@ -97,18 +115,28 @@ def main():
     print(qsort_low)
     print('quick_sort_low_memory {} seconds'.format(round(qsort_low_time - stime, 6)))
     print('--------------------------------------------')
+    print('')
 
     qsort_more = quick_sort_high_memory(lst=copy(unordered_list))
     qsort_more_time = time()
     print(qsort_more)
     print('quick_sort_high_memory {} seconds'.format(round(qsort_more_time - qsort_low_time, 6)))
     print('/////////////////////////////////////////////')
+    print('')
 
     bubble_res = bubble_sort(lst=copy(unordered_list))
     bubble_time = time()
     print(bubble_res)
     print('bubble sort {} seconds'.format(round(bubble_time - qsort_more_time, 6)))
     print('*********************************************')
+    print('')
+
+    insertion_res = insertion_sort(lst=copy(unordered_list))
+    insertion_time = time()
+    print(insertion_res)
+    print('insertion sort {} seconds'.format(round(insertion_time - bubble_time, 6)))
+    print('++++++++++++++++++++++++++++++++++++++++++++')
+    print('')
 
     print(unordered_list)
     print('unordered_list')
