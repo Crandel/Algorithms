@@ -8,6 +8,9 @@ from time import time
 
 
 def swap(lst, left, right):
+    '''
+    Change list elements
+    '''
     if left != right:
         lst[left], lst[right] = lst[right], lst[left]
     return lst
@@ -25,11 +28,11 @@ def part(part_list, begin, end):
 
         if part_list[i] <= part_list[begin]:
             pivot += 1
-            part_list[i], part_list[pivot] = part_list[pivot], part_list[i]
+            swap(part_list, i, pivot)
     # After loop we separate list in 2 parts
     # In left part will be elements that less then list[pivot]
     # In right part will be more than pivot element
-    part_list[pivot], part_list[begin] = part_list[begin], part_list[pivot]
+    swap(part_list, begin, pivot)
     return pivot
 
 
@@ -69,6 +72,9 @@ def quick_sort_high_memory(lst):
 
 
 def bubble_sort(lst):
+    '''
+    Bubble sort method
+    '''
     for l1, val in enumerate(lst):
         for l, value in enumerate(lst):
             if lst[l] > lst[l1]:
@@ -80,10 +86,10 @@ def main():
     '''
     Start point of script
     '''
-    unordered_list = [9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45,
-                      2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13,
-                      45, 74, 63, 79, 4, 1, 7, 41, 55, 75, 32, 78,
-                      56, 72, 97, 111, 687, 214, 99, 2, 1111, 6578]
+    unordered_list = [9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 456,
+                      2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 334,
+                      45, 74, 63, 79, 4, 1, 7, 41, 55, 75, 32, 78, 677,
+                      56, 72, 97, 111, 687, 214, 99, 2, 1111, 6578, 455]
     stime = time()
 
     qsort_low = quick_sort_low_memory(lst=copy(unordered_list), bgn=0)
