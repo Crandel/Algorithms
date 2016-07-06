@@ -100,6 +100,24 @@ def insertion_sort(lst):
     return lst
 
 
+def selection_sort(lst):
+    sort_end_index = 0
+    end = len(lst)
+
+    while sort_end_index < end:
+        smallest = lst[sort_end_index]
+        smallest_index = sort_end_index
+
+        for i in range(sort_end_index, end):
+            if smallest > lst[i]:
+                smallest = lst[i]
+                smallest_index = i
+
+        swap(lst, sort_end_index, smallest_index)
+        sort_end_index += 1
+    return lst
+
+
 def main():
     '''
     Start point of script
@@ -136,6 +154,13 @@ def main():
     print(insertion_res)
     print('insertion sort {} seconds'.format(round(insertion_time - bubble_time, 6)))
     print('++++++++++++++++++++++++++++++++++++++++++++')
+    print('')
+
+    selection_res = selection_sort(lst=copy(unordered_list))
+    selection_time = time()
+    print(selection_res)
+    print('selection sort {} seconds'.format(round(selection_time - insertion_time, 6)))
+    print('............................................')
     print('')
 
     print(unordered_list)
