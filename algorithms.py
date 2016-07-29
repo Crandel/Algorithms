@@ -118,6 +118,71 @@ def selection_sort(lst):
     return lst
 
 
+def merge_sort_high_memory(lst):
+
+    def merge(lst, left, right):
+        lindex, rindex, target_index = 0, 0, 0
+        llen, rlen = len(left), len(right)
+        remaining = llen + rlen
+        while remaining > 0:
+            if lindex >= llen:
+                lst[target_index] = right[rindex]
+                rindex += 1
+            elif rindex >= rlen:
+                lst[target_index] = left[lindex]
+                lindex += 1
+            elif left[lindex] < right[rindex]:
+                lst[target_index] = left[lindex]
+                lindex += 1
+            else:
+                lst[target_index] = right[rindex]
+                rindex += 1
+            target_index += 1
+            remaining -= 1
+        return lst
+
+    lenght = len(lst)
+    if lenght > 1:
+        left_size = lenght // 2
+        right_size = lenght - left_size
+        left = lst[:left_size]
+        right = lst[-right_size:]
+        merge_sort_high_memory(left)
+        merge_sort_high_memory(right)
+
+        merge(lst, left, right)
+        return lst
+
+
+def merge_sort_low_memory(lst, ri, li=0):
+
+    def merge(lst, left, right):
+        middle = right - left // 2
+        lindex, rindex = left, middle
+#        import pdb; pdb.set_trace()  # BREAKPOINT
+
+        for i in range(left, right):
+            if lindex >= middle:
+                rindex += 1
+            elif rindex >= right:
+                lindex += 1
+            if lst[i] > lst[lindex]:
+                swap(lst, lindex, i)
+                lindex += 1
+            elif lst[i] > lst[rindex]:
+                swap(lst, rindex, i)
+                rindex += 1
+        return lst
+
+    if ri - li > 1:
+        next_i = (li + ri) // 2
+        merge_sort_low_memory(lst=lst, ri=next_i, li=li)
+        merge_sort_low_memory(lst=lst, ri=ri, li=next_i + 1)
+
+        merge(lst, li, ri)
+        return lst
+
+
 def main():
     '''
     Start point of script
@@ -160,6 +225,20 @@ def main():
     selection_time = time()
     print(selection_res)
     print('selection sort {} seconds'.format(round(selection_time - insertion_time, 6)))
+    print('............................................')
+    print('')
+
+    merge_hres = merge_sort_high_memory(lst=copy(unordered_list))
+    merge_htime = time()
+    print(merge_hres)
+    print('merge high sort {} seconds'.format(round(merge_htime - selection_time, 6)))
+    print('............................................')
+    print('')
+
+    merge_lres = merge_sort_low_memory(lst=copy(unordered_list), ri=len(unordered_list))
+    merge_ltime = time()
+    print(merge_lres)
+    print('merge low sort {} seconds'.format(round(merge_ltime - merge_htime, 6)))
     print('............................................')
     print('')
 
