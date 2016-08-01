@@ -4,7 +4,24 @@ I want to learn some algorithms, so I compare them sorting list
 Module for testing different algorithms
 '''
 from copy import copy
-from time import time
+
+
+def benchmark(func):
+    """
+    Time benchmarking decorator
+    """
+    import time
+
+    def wrapper(*args, **kwargs):
+        t = time.clock()
+        res = func(*args, **kwargs)
+
+        print(res)
+        print('Run %s %f seconds' % (func.__name__, round(time.clock() - t, 6)))
+        print('....................................................')
+        return res
+
+    return wrapper
 
 
 def swap(lst, left, right):
@@ -53,8 +70,12 @@ def quick_sort_low_memory(lst, bgn, end=None):
     return lst
 
 
-def quick_sort_high_memory(lst):
+@benchmark
+def run_quick_sort_low_memory(lst):
+    return quick_sort_low_memory(lst=lst, bgn=0)
 
+
+def quick_sort_high_memory(lst):
     '''
     Use more memory, create new lists
     '''
@@ -71,6 +92,11 @@ def quick_sort_high_memory(lst):
     return less + pivots + great
 
 
+@benchmark
+def run_quick_sort_high_memory(lst):
+    return quick_sort_high_memory(lst=lst)
+
+
 def bubble_sort(lst):
     '''
     Bubble sort method
@@ -80,6 +106,11 @@ def bubble_sort(lst):
             if lst[l] > lst[l1]:
                 swap(lst, l, l1)
     return lst
+
+
+@benchmark
+def run_bubble_sort(lst):
+    return bubble_sort(lst=lst)
 
 
 def insertion_sort(lst):
@@ -100,7 +131,15 @@ def insertion_sort(lst):
     return lst
 
 
+@benchmark
+def run_insertion_sort(lst):
+    return insertion_sort(lst=lst)
+
+
 def selection_sort(lst):
+    '''
+    Selection sort algorithm
+    '''
     sort_end_index = 0
     end = len(lst)
 
@@ -118,8 +157,15 @@ def selection_sort(lst):
     return lst
 
 
-def merge_sort_high_memory(lst):
+@benchmark
+def run_selection_sort(lst):
+    return selection_sort(lst=lst)
 
+
+def merge_sort_high_memory(lst):
+    '''
+    Merge sort algorithm, memory unoptimized
+    '''
     def merge(lst, left, right):
         lindex, rindex, target_index = 0, 0, 0
         llen, rlen = len(left), len(right)
@@ -154,8 +200,16 @@ def merge_sort_high_memory(lst):
         return lst
 
 
-def merge_sort_low_memory(lst, ri, li=0):
+@benchmark
+def run_merge_sort_high_memory(lst):
+    return merge_sort_high_memory(lst=lst)
 
+
+def merge_sort_low_memory(lst, ri, li=0):
+    '''
+    Merge sort algorithm, memory optimized
+    '''
+    # TODO Fix algorithm
     def merge(lst, left, right):
         middle = right - left // 2
         lindex, rindex = left, middle
@@ -183,6 +237,11 @@ def merge_sort_low_memory(lst, ri, li=0):
         return lst
 
 
+@benchmark
+def run_merge_sort_low_memory(lst):
+    return merge_sort_low_memory(lst=lst, ri=len(lst))
+
+
 def main():
     '''
     Start point of script
@@ -191,59 +250,15 @@ def main():
                       2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 334,
                       45, 74, 63, 79, 4, 1, 7, 41, 55, 75, 32, 78, 677,
                       56, 72, 97, 111, 687, 214, 99, 2, 1111, 6578, 455]
-    stime = time()
-
-    qsort_low = quick_sort_low_memory(lst=copy(unordered_list), bgn=0)
-    qsort_low_time = time()
-    print(qsort_low)
-    print('quick_sort_low_memory {} seconds'.format(round(qsort_low_time - stime, 6)))
-    print('--------------------------------------------')
-    print('')
-
-    qsort_more = quick_sort_high_memory(lst=copy(unordered_list))
-    qsort_more_time = time()
-    print(qsort_more)
-    print('quick_sort_high_memory {} seconds'.format(round(qsort_more_time - qsort_low_time, 6)))
-    print('/////////////////////////////////////////////')
-    print('')
-
-    bubble_res = bubble_sort(lst=copy(unordered_list))
-    bubble_time = time()
-    print(bubble_res)
-    print('bubble sort {} seconds'.format(round(bubble_time - qsort_more_time, 6)))
-    print('*********************************************')
-    print('')
-
-    insertion_res = insertion_sort(lst=copy(unordered_list))
-    insertion_time = time()
-    print(insertion_res)
-    print('insertion sort {} seconds'.format(round(insertion_time - bubble_time, 6)))
-    print('++++++++++++++++++++++++++++++++++++++++++++')
-    print('')
-
-    selection_res = selection_sort(lst=copy(unordered_list))
-    selection_time = time()
-    print(selection_res)
-    print('selection sort {} seconds'.format(round(selection_time - insertion_time, 6)))
-    print('............................................')
-    print('')
-
-    merge_hres = merge_sort_high_memory(lst=copy(unordered_list))
-    merge_htime = time()
-    print(merge_hres)
-    print('merge high sort {} seconds'.format(round(merge_htime - selection_time, 6)))
-    print('............................................')
-    print('')
-
-    merge_lres = merge_sort_low_memory(lst=copy(unordered_list), ri=len(unordered_list))
-    merge_ltime = time()
-    print(merge_lres)
-    print('merge low sort {} seconds'.format(round(merge_ltime - merge_htime, 6)))
-    print('............................................')
-    print('')
-
-    print(unordered_list)
+    run_quick_sort_high_memory(copy(unordered_list))
+    run_quick_sort_high_memory(copy(unordered_list))
+    run_bubble_sort(copy(unordered_list))
+    run_insertion_sort(copy(unordered_list))
+    run_selection_sort(copy(unordered_list))
+    run_merge_sort_high_memory(copy(unordered_list))
+    # run_merge_sort_low_memory(copy(unordered_list))
     print('unordered_list')
+    print(unordered_list)
 
 
 if __name__ == "__main__":
