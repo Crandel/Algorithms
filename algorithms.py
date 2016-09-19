@@ -210,30 +210,31 @@ def merge_sort_low_memory(lst, ri, li=0):
     Merge sort algorithm, memory optimized
     '''
     # TODO Fix algorithm
-    def merge(lst, left, right):
-        middle = right - left // 2
-        lindex, rindex = left, middle
-#        import pdb; pdb.set_trace()  # BREAKPOINT
-
-        for i in range(left, right):
-            if lindex >= middle:
-                rindex += 1
-            elif rindex >= right:
-                lindex += 1
-            if lst[i] > lst[lindex]:
-                swap(lst, lindex, i)
-                lindex += 1
-            elif lst[i] > lst[rindex]:
-                swap(lst, rindex, i)
-                rindex += 1
+    def merge(lst, left, middle, right):
+        m = middle
+        cur = left
+        while cur <= right:
+            if left >= middle:
+                m += 1
+            if m >= right:
+                break
+            if lst[cur] > lst[left]:
+                swap(lst, cur, left)
+                cur += 1
+            print(cur, left, m)
+            if lst[cur] > lst[m]:
+                swap(lst, cur, m)
+                cur += 1
+            left += 1
+            m += 1
         return lst
 
     if ri - li > 1:
-        next_i = (li + ri) // 2
-        merge_sort_low_memory(lst=lst, ri=next_i, li=li)
-        merge_sort_low_memory(lst=lst, ri=ri, li=next_i + 1)
+        middle = (li + ri) // 2
+        merge_sort_low_memory(lst=lst, ri=middle, li=li)
+        merge_sort_low_memory(lst=lst, ri=ri, li=middle + 1)
 
-        merge(lst, li, ri)
+        merge(lst, li, middle, ri)
         return lst
 
 
@@ -251,7 +252,7 @@ def main():
                       45, 74, 63, 79, 4, 1, 7, 41, 55, 75, 32, 78, 677,
                       56, 72, 97, 111, 687, 214, 99, 2, 1111, 6578, 455]
     run_quick_sort_high_memory(copy(unordered_list))
-    run_quick_sort_high_memory(copy(unordered_list))
+    run_quick_sort_low_memory(copy(unordered_list))
     run_bubble_sort(copy(unordered_list))
     run_insertion_sort(copy(unordered_list))
     run_selection_sort(copy(unordered_list))
