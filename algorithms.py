@@ -193,7 +193,9 @@ def merge_sort_high_memory(lst):
         right_size = lenght - left_size
         left = lst[:left_size]
         right = lst[-right_size:]
+        print(left, right, 'first recursiv')
         merge_sort_high_memory(left)
+        print(left, right, 'sec recursiv')
         merge_sort_high_memory(right)
 
         merge(lst, left, right)
@@ -203,44 +205,6 @@ def merge_sort_high_memory(lst):
 @benchmark
 def run_merge_sort_high_memory(lst):
     return merge_sort_high_memory(lst=lst)
-
-
-def merge_sort_low_memory(lst, ri, li=0):
-    '''
-    Merge sort algorithm, memory optimized
-    '''
-    # TODO Fix algorithm
-    def merge(lst, left, middle, right):
-        m = middle
-        cur = left
-        while cur <= right:
-            if left >= middle:
-                m += 1
-            if m >= right:
-                break
-            if lst[cur] > lst[left]:
-                swap(lst, cur, left)
-                cur += 1
-            print(cur, left, m)
-            if lst[cur] > lst[m]:
-                swap(lst, cur, m)
-                cur += 1
-            left += 1
-            m += 1
-        return lst
-
-    if ri - li > 1:
-        middle = (li + ri) // 2
-        merge_sort_low_memory(lst=lst, ri=middle, li=li)
-        merge_sort_low_memory(lst=lst, ri=ri, li=middle + 1)
-
-        merge(lst, li, middle, ri)
-        return lst
-
-
-@benchmark
-def run_merge_sort_low_memory(lst):
-    return merge_sort_low_memory(lst=lst, ri=len(lst))
 
 
 def main():
@@ -257,7 +221,6 @@ def main():
     run_insertion_sort(copy(unordered_list))
     run_selection_sort(copy(unordered_list))
     run_merge_sort_high_memory(copy(unordered_list))
-    # run_merge_sort_low_memory(copy(unordered_list))
     print('unordered_list')
     print(unordered_list)
 
