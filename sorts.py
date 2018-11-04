@@ -4,24 +4,20 @@ I want to learn some algorithms, so I compare them sorting list
 Module for testing different algorithms
 '''
 from copy import copy
+import timeit
 
 
-def benchmark(func):
-    """
-    Time benchmarking decorator
-    """
-    import time
+unordered_list = [9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 456,
+                  2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 334,
+                  45, 74, 63, 79, 4, 1, 7, 41, 55, 75, 32, 78, 677,
+                  56, 72, 97, 111, 687, 214, 99, 2, 1111, 6578, 455]
 
-    def wrapper(*args, **kwargs):
-        t = time.clock()
-        res = func(*args, **kwargs)
-
-        print(res)
-        print('Run %s %f seconds' % (func.__name__, round(time.clock() - t, 6)))
-        print('....................................................')
-        return res
-
-    return wrapper
+quick_sort_low_memory_unordered_list = copy(unordered_list)
+quick_sort_high_memory_unordered_list = copy(unordered_list)
+bubble_sort_unordered_list = copy(unordered_list)
+insertion_sort_unordered_list = copy(unordered_list)
+selection_sort_unordered_list = copy(unordered_list)
+merge_sort_high_memory_unordered_list = copy(unordered_list)
 
 
 def swap(lst, left, right):
@@ -70,11 +66,6 @@ def quick_sort_low_memory(lst, bgn, end=None):
     return lst
 
 
-@benchmark
-def run_quick_sort_low_memory(lst):
-    return quick_sort_low_memory(lst=lst, bgn=0)
-
-
 def quick_sort_high_memory(lst):
     '''
     Use more memory, create new lists
@@ -92,11 +83,6 @@ def quick_sort_high_memory(lst):
     return less + pivots + great
 
 
-@benchmark
-def run_quick_sort_high_memory(lst):
-    return quick_sort_high_memory(lst=lst)
-
-
 def bubble_sort(lst):
     '''
     Bubble sort method
@@ -106,11 +92,6 @@ def bubble_sort(lst):
             if lst[l] > lst[l1]:
                 swap(lst, l, l1)
     return lst
-
-
-@benchmark
-def run_bubble_sort(lst):
-    return bubble_sort(lst=lst)
 
 
 def insertion_sort(lst):
@@ -129,11 +110,6 @@ def insertion_sort(lst):
             lst.insert(index, value)
         sort_end_index += 1
     return lst
-
-
-@benchmark
-def run_insertion_sort(lst):
-    return insertion_sort(lst=lst)
 
 
 def selection_sort(lst):
@@ -155,11 +131,6 @@ def selection_sort(lst):
         swap(lst, sort_end_index, smallest_index)
         sort_end_index += 1
     return lst
-
-
-@benchmark
-def run_selection_sort(lst):
-    return selection_sort(lst=lst)
 
 
 def merge_sort_high_memory(lst):
@@ -193,37 +164,55 @@ def merge_sort_high_memory(lst):
         right_size = lenght - left_size
         left = lst[:left_size]
         right = lst[-right_size:]
-        print(left, right, 'first recursiv')
         merge_sort_high_memory(left)
-        print(left, right, 'sec recursiv')
         merge_sort_high_memory(right)
 
         merge(lst, left, right)
         return lst
 
 
-@benchmark
-def run_merge_sort_high_memory(lst):
-    return merge_sort_high_memory(lst=lst)
-
-
 def main():
     '''
     Start point of script
     '''
-    unordered_list = [9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 456,
-                      2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 334,
-                      45, 74, 63, 79, 4, 1, 7, 41, 55, 75, 32, 78, 677,
-                      56, 72, 97, 111, 687, 214, 99, 2, 1111, 6578, 455]
-    run_quick_sort_high_memory(copy(unordered_list))
-    run_quick_sort_low_memory(copy(unordered_list))
-    run_bubble_sort(copy(unordered_list))
-    run_insertion_sort(copy(unordered_list))
-    run_selection_sort(copy(unordered_list))
-    run_merge_sort_high_memory(copy(unordered_list))
-    print('unordered_list')
+
+    print('Unordered list')
     print(unordered_list)
+    print()
+
+    print('Start sorting test')
+    print()
+
+    print('quick_sort_low_memory')
+    print(quick_sort_low_memory(quick_sort_low_memory_unordered_list, bgn=0))
+    print(timeit.timeit('quick_sort_low_memory(quick_sort_low_memory_unordered_list, bgn=0)', number=100000, globals=globals()))
+    print()
+
+    print('quick_sort_high_memory')
+    print(quick_sort_high_memory(quick_sort_high_memory_unordered_list))
+    print(timeit.timeit('quick_sort_high_memory(quick_sort_high_memory_unordered_list)', number=100000, globals=globals()))
+    print()
+
+    print('bubble_sort')
+    print(bubble_sort(bubble_sort_unordered_list))
+    print(timeit.timeit('bubble_sort(bubble_sort_unordered_list)', number=100000, globals=globals()))
+    print()
+
+    print('insertion_sort')
+    print(insertion_sort(insertion_sort_unordered_list))
+    print(timeit.timeit('insertion_sort(insertion_sort_unordered_list)', number=100000, globals=globals()))
+    print()
+
+    print('selection_sort')
+    print(selection_sort(selection_sort_unordered_list))
+    print(timeit.timeit('selection_sort(selection_sort_unordered_list)', number=100000, globals=globals()))
+    print()
+
+    print('merge_sort_high_memory')
+    print(merge_sort_high_memory(merge_sort_high_memory_unordered_list))
+    print(timeit.timeit('merge_sort_high_memory(merge_sort_high_memory_unordered_list)', number=100000, globals=globals()))
+    print()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
