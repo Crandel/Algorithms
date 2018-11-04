@@ -7,6 +7,7 @@ from copy import copy
 import timeit
 
 
+from typing import List, Optional
 unordered_list = [9, 34, 42, 56, 22, 87, 43, 21, 89, 76, 45, 456,
                   2, 97, 6, 75, 98, 12, 54, 32, 71, 66, 13, 334,
                   45, 74, 63, 79, 4, 1, 7, 41, 55, 75, 32, 78, 677,
@@ -20,7 +21,7 @@ selection_sort_unordered_list = copy(unordered_list)
 merge_sort_high_memory_unordered_list = copy(unordered_list)
 
 
-def swap(lst, left, right):
+def swap(lst: List[int], left: int, right: int) -> List[int]:
     '''
     Change list elements
     '''
@@ -30,7 +31,7 @@ def swap(lst, left, right):
 
 
 # Quick Sort Part
-def part(part_list, begin, end):
+def part(part_list: List[int], begin: int, end: int) -> int:
     '''
     Help function for quick sort
     '''
@@ -49,7 +50,7 @@ def part(part_list, begin, end):
     return pivot
 
 
-def quick_sort_low_memory(lst, bgn, end=None):
+def quick_sort_low_memory(lst: List[int], bgn: int, end: Optional[int] = None) -> Optional[List[int]]:
     '''
     Use minimal memory, only move elements
     '''
@@ -66,7 +67,7 @@ def quick_sort_low_memory(lst, bgn, end=None):
     return lst
 
 
-def quick_sort_high_memory(lst):
+def quick_sort_high_memory(lst: List[int]) -> List[int]:
     '''
     Use more memory, create new lists
     '''
@@ -83,7 +84,7 @@ def quick_sort_high_memory(lst):
     return less + pivots + great
 
 
-def bubble_sort(lst):
+def bubble_sort(lst: List[int]) -> List[int]:
     '''
     Bubble sort method
     '''
@@ -94,7 +95,7 @@ def bubble_sort(lst):
     return lst
 
 
-def insertion_sort(lst):
+def insertion_sort(lst: List[int]) -> List[int]:
     sort_end_index = 1
 
     def insert_index(lst, value):
@@ -112,7 +113,7 @@ def insertion_sort(lst):
     return lst
 
 
-def selection_sort(lst):
+def selection_sort(lst: List[int]) -> List[int]:
     '''
     Selection sort algorithm
     '''
@@ -133,7 +134,7 @@ def selection_sort(lst):
     return lst
 
 
-def merge_sort_high_memory(lst):
+def merge_sort_high_memory(lst: List[int]) -> Optional[List[int]]:
     '''
     Merge sort algorithm, memory unoptimized
     '''
@@ -171,7 +172,7 @@ def merge_sort_high_memory(lst):
         return lst
 
 
-def main():
+def main() -> None:
     '''
     Start point of script
     '''
